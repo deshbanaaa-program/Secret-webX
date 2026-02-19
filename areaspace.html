@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7SECRET - Member Guild</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.3);
+            border: 1px solid #444;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px gold, 0 0 20px gold;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #bbb;
+            font-weight: 300;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: gold;
+            box-shadow: 0 0 10px gold;
+        }
+        button {
+            background: linear-gradient(45deg, #444, #222);
+            color: gold;
+            border: 1px solid gold;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 5px gold;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: gold;
+            color: #222;
+            box-shadow: 0 0 20px gold;
+        }
+        .card {
+            background: #262626;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid gold;
+            box-shadow: 0 0 20px gold;
+        }
+        .status-badge {
+            background: gold;
+            color: #222;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .online-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .online-item {
+            background: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid gold;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            background: #1f1f1f;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 10px;
+            background: #2a2a2a;
+        }
+        .message small {
+            color: gold;
+        }
+        .announcement {
+            background: #332b00;
+            border-left: 5px solid gold;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .visi-misi {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .visi-misi p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .hidden {
+            display: none;
+        }
+        .btn-link {
+            background: none;
+            border: none;
+            color: gold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .file-message {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- Halaman Login -->
+        <div id="loginPage" class="card">
+            <h1>🔐 7SECRET GUILD</h1>
+            <h3>Sign-In Member</h3>
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="loginName" placeholder="Masukkan nama Anda">
+            </div>
+            <div class="form-group">
+                <label>ID Free Fire</label>
+                <input type="text" id="loginId" placeholder="Masukkan ID FF">
+            </div>
+            <div class="form-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="loginPassword" placeholder="Buat / Masukkan password">
+            </div>
+            <button onclick="handleLogin()">MASUK</button>
+            <p style="margin-top: 15px; text-align: center; color: #ff9999;">*Jika pertama login, gunakan password baru Anda.</p>
+        </div>
+
+        <!-- Halaman Profil User (setelah login) -->
+        <div id="profilePage" class="hidden">
+            <div class="profile-header">
+                <img id="profileAvatar" class="avatar" src="https://via.placeholder.com/100?text=User" alt="Avatar">
+                <div>
+                    <h2 id="profileName"></h2>
+                    <p>ID: <span id="profileId"></span></p>
+                    <p>Status: <span id="profileStatus" class="status-badge"></span></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Upload Foto Profil (bulat):</label>
+                <input type="file" id="uploadAvatar" accept="image/*">
+                <button onclick="uploadAvatar()">Simpan Foto</button>
+            </div>
+
+            <!-- Online Users -->
+            <div class="card">
+                <h3>🟢 Member Online</h3>
+                <div id="onlineUsers" class="online-list"></div>
+            </div>
+
+            <!-- Chat Room -->
+            <div class="card">
+                <h3>💬 Chat Guild</h3>
+                <div id="chatMessages" class="chat-box"></div>
+                <div class="form-group">
+                    <textarea id="chatInput" placeholder="Tulis pesan..." rows="2"></textarea>
+                    <input type="file" id="chatFile" accept="image/*,video/*">
+                    <button onclick="sendMessage()">Kirim Teks</button>
+                    <button onclick="sendFile()">Kirim File</button>
+                </div>
+            </div>
+
+            <!-- Pengumuman -->
+            <div class="card">
+                <h3>📢 Pengumuman</h3>
+                <div id="announcements"></div>
+            </div>
+
+            <!-- Visi Misi -->
+            <div class="visi-misi">
+                <h3>✨ VISI & MISI ✨</h3>
+                <p><strong>Visi:</strong> "Menjadi salah satu guild FF terbaik di Indonesia, dikenal karena kerja sama tim, strategi yang solid, dan semangat kompetitif yang tinggi."</p>
+                <p><strong>Misi:</strong></p>
+                <ol style="text-align: left; margin-left: 20px;">
+                    <li>Membangun Kerja Sama Tim: Meningkatkan komunikasi dan kerja sama antar anggota guild untuk mencapai kemenangan.</li>
+                    <li>Mengembangkan Strategi: Menganalisis dan mengembangkan strategi untuk meningkatkan kemampuan tim.</li>
+                    <li>Meningkatkan Kompetisi: Berpartisipasi dalam turnamen dan kompetisi untuk meningkatkan kemampuan dan reputasi guild.</li>
+                    <li>Membangun Komunitas: Menciptakan lingkungan yang ramah dan mendukung bagi semua anggota guild.</li>
+                </ol>
+            </div>
+
+            <!-- Link WhatsApp -->
+            <div class="card" style="text-align: center;">
+                <h3>📱 Grup WhatsApp</h3>
+                <a href="https://chat.whatsapp.com/GgJeGmn6As44jaV1AeUTUE" target="_blank">Klik untuk bergabung</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inisialisasi data di localStorage
+        if (!localStorage.getItem('members')) {
+            const initialMembers = [
+                { id: "6328036149", name: "Owner FF", status: "Officer", password: "owner123" },
+                { id: "11148806160", name: "", status: "Member", password: "" },
+                { id: "3505726742", name: "", status: "Member", password: "" },
+                { id: "8743326768", name: "", status: "Kapten guild", password: "" },
+                { id: "8500937373", name: "", status: "Member", password: "" },
+                { id: "8779970577", name: "", status: "Member", password: "" },
+                { id: "11165927473", name: "", status: "Member", password: "" },
+                { id: "14249726116", name: "", status: "Member", password: "" },
+                { id: "14324586100", name: "", status: "Member", password: "" }
+            ];
+            localStorage.setItem('members', JSON.stringify(initialMembers));
+        }
+        if (!localStorage.getItem('chats')) {
+            localStorage.setItem('chats', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('announcements')) {
+            localStorage.setItem('announcements', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('onlineUsers')) {
+            localStorage.setItem('onlineUsers', JSON.stringify([]));
+        }
+
+        let currentUser = null; // menyimpan data user yang login
+
+        // Fungsi login
+        function handleLogin() {
+            const name = document.getElementById('loginName').value.trim();
+            const id = document.getElementById('loginId').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!name || !id || !password) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+
+            let members = JSON.parse(localStorage.getItem('members'));
+            const member = members.find(m => m.id === id);
+
+            if (!member) {
+                alert('ID tidak terdaftar! Hubungi owner untuk mendaftar.');
+                return;
+            }
+
+            // Jika password belum diset (member baru pertama login)
+            if (!member.password) {
+                // Set password dan nama
+                member.name = name;
+                member.password = password;
+                localStorage.setItem('members', JSON.stringify(members));
+                currentUser = member;
+                addToOnline(id, name);
+                showProfile();
+            } else {
+                // Cek password
+                if (member.password === password) {
+                    member.name = name; // update nama jika berbeda
+                    localStorage.setItem('members', JSON.stringify(members));
+                    currentUser = member;
+                    addToOnline(id, name);
+                    showProfile();
+                } else {
+                    alert('Password salah!');
+                }
+            }
+        }
+
+        // Tambah user ke daftar online
+        function addToOnline(id, name) {
+            let online = JSON.parse(localStorage.getItem('onlineUsers')) || [];
+            online = online.filter(u => u.id !== id);
+            online.push({ id, name, lastSeen: Date.now() });
+            localStorage.setItem('onlineUsers', JSON.stringify(online));
+        }
+
+        // Hapus user dari online (saat window ditutup)
+        window.addEventListener('beforeunload', function() {
+            if (currentUser) {
+                let online = JSON.parse(localStorage.getItem('onlineUsers')) || [];
+                online = online.filter(u => u.id !== currentUser.id);
+                localStorage.setItem('onlineUsers', JSON.stringify(online));
+            }
+        });
+
+        // Tampilkan halaman profil
+        function showProfile() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('profilePage').classList.remove('hidden');
+            // Update profil
+            document.getElementById('profileName').innerText = currentUser.name;
+            document.getElementById('profileId').innerText = currentUser.id;
+            document.getElementById('profileStatus').innerText = currentUser.status;
+
+            // Load foto profil dari localStorage jika ada
+            const savedAvatar = localStorage.getItem(`avatar_${currentUser.id}`);
+            if (savedAvatar) {
+                document.getElementById('profileAvatar').src = savedAvatar;
+            }
+
+            // Tampilkan online users
+            updateOnlineUsers();
+            // Tampilkan chat
+            loadChats();
+            // Tampilkan pengumuman
+            loadAnnouncements();
+
+            // Refresh setiap 5 detik untuk update online dan chat
+            setInterval(() => {
+                updateOnlineUsers();
+                loadChats();
+                loadAnnouncements();
+            }, 5000);
+        }
+
+        // Update daftar online users
+        function updateOnlineUsers() {
+            let online = JSON.parse(localStorage.getItem('onlineUsers')) || [];
+            // Hapus yang sudah lebih dari 10 detik (simulasi timeout)
+            const now = Date.now();
+            online = online.filter(u => now - u.lastSeen < 10000); // 10 detik
+            localStorage.setItem('onlineUsers', JSON.stringify(online));
+
+            const container = document.getElementById('onlineUsers');
+            container.innerHTML = '';
+            if (online.length === 0) {
+                container.innerHTML = '<p>Tidak ada member online</p>';
+            } else {
+                online.forEach(u => {
+                    const div = document.createElement('span');
+                    div.className = 'online-item';
+                    div.innerText = u.name;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        // Upload avatar
+        function uploadAvatar() {
+            const fileInput = document.getElementById('uploadAvatar');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarUrl = e.target.result;
+                    document.getElementById('profileAvatar').src = avatarUrl;
+                    localStorage.setItem(`avatar_${currentUser.id}`, avatarUrl);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                alert('Pilih file terlebih dahulu.');
+            }
+        }
+
+        // Kirim pesan teks
+        function sendMessage() {
+            const text = document.getElementById('chatInput').value.trim();
+            if (!text) return;
+
+            const chats = JSON.parse(localStorage.getItem('chats')) || [];
+            chats.push({
+                fromId: currentUser.id,
+                fromName: currentUser.name,
+                text: text,
+                type: 'text',
+                time: new Date().toLocaleTimeString()
+            });
+            localStorage.setItem('chats', JSON.stringify(chats));
+            document.getElementById('chatInput').value = '';
+            loadChats();
+        }
+
+        // Kirim file (gambar/video)
+        function sendFile() {
+            const fileInput = document.getElementById('chatFile');
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('Pilih file terlebih dahulu.');
+                return;
+            }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fileData = e.target.result;
+                const fileType = file.type.split('/')[0]; // 'image' atau 'video'
+                const chats = JSON.parse(localStorage.getItem('chats')) || [];
+                chats.push({
+                    fromId: currentUser.id,
+                    fromName: currentUser.name,
+                    text: fileData,
+                    type: fileType,
+                    fileName: file.name,
+                    time: new Date().toLocaleTimeString()
+                });
+                localStorage.setItem('chats', JSON.stringify(chats));
+                loadChats();
+                fileInput.value = ''; // reset input
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Tampilkan chat
+        function loadChats() {
+            const chats = JSON.parse(localStorage.getItem('chats')) || [];
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            chats.slice(-30).forEach(chat => { // tampilkan 30 terakhir
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message';
+                let content = '';
+                if (chat.type === 'text') {
+                    content = chat.text;
+                } else if (chat.type === 'image') {
+                    content = `<img src="${chat.text}" class="file-message" alt="Gambar">`;
+                } else if (chat.type === 'video') {
+                    content = `<video controls class="file-message"><source src="${chat.text}"></video>`;
+                }
+                msgDiv.innerHTML = `<small>${chat.time} - ${chat.fromName}:</small><br>${content}`;
+                container.appendChild(msgDiv);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Tampilkan pengumuman
+        function loadAnnouncements() {
+            const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+            const container = document.getElementById('announcements');
+            container.innerHTML = '';
+            if (announcements.length === 0) {
+                container.innerHTML = '<p>Belum ada pengumuman.</p>';
+            } else {
+                announcements.slice().reverse().forEach(ann => {
+                    const div = document.createElement('div');
+                    div.className = 'announcement';
+                    div.innerHTML = `<strong>${ann.title}</strong><br>${ann.content}<br><small>${ann.date}</small>`;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        // Simulasi update online berkala (perpanjang lastSeen)
+        setInterval(() => {
+            if (currentUser) {
+                let online = JSON.parse(localStorage.getItem('onlineUsers')) || [];
+                const idx = online.findIndex(u => u.id === currentUser.id);
+                if (idx !== -1) {
+                    online[idx].lastSeen = Date.now();
+                    localStorage.setItem('onlineUsers', JSON.stringify(online));
+                }
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
